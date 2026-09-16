@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>$MILES — Privacy Policy</title>
+  <style>
+    :root {
+      --bg: #000000;
+      --card: #111111;
+      --border: rgba(255,255,255,0.08);
+      --orange: #FF6A00;
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.55);
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 28px 24px;
+    }
+    header .brand {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    header .brand span.dot {
+      display: inline-block;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 8px var(--orange);
+    }
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+    h1 {
+      font-size: clamp(32px, 6vw, 48px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+    .effective {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 48px;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 40px 0 12px;
+      color: var(--text);
+    }
+    p {
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+    ul {
+      color: var(--muted);
+      font-size: 16px;
+      padding-left: 24px;
+      margin-bottom: 16px;
+    }
+    ul li { margin-bottom: 8px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 40px 0;
+    }
+    .card p { margin: 0; }
+    .highlight { color: var(--orange); font-weight: 600; }
+    a { color: var(--orange); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="dot"></span>
+    $MILES
+  </div>
+</header>
+
+<main>
+  <h1>Privacy Policy</h1>
+  <p class="effective">Effective date: September 16, 2026 &nbsp;·&nbsp; Last updated: September 16, 2026</p>
+
+  <div class="card">
+    <p>
+      <span class="highlight">Short version:</span> $MILES uses your location and motion data
+      to detect driving trips automatically. We do not sell your data. We do not share it
+      with advertisers. Location data stays on your device except for the trip distance
+      figures we compute and store for your own history.
+    </p>
+  </div>
+
+  <h2>1. Who We Are</h2>
+  <p>
+    $MILES ("the app", "we", "us") is an independent drive-tracking application. We are not
+    affiliated with, endorsed by, or connected to Tesla, Inc., Robinhood Markets, Inc., or
+    any of their subsidiaries.
+  </p>
+
+  <h2>2. What Data We Collect</h2>
+
+  <h2 style="font-size:16px; font-weight:600; margin-top:24px;">2a. Location Data</h2>
+  <p>
+    $MILES requests <strong>"Always Allow"</strong> location permission so it can detect
+    driving trips automatically in the background — even when the app is not open.
+  </p>
+  <ul>
+    <li>We collect GPS coordinates during a detected trip to measure distance and verify road usage.</li>
+    <li>Trip route coordinates are stored <strong>on your device only</strong> (via SwiftData).</li>
+    <li>We do <strong>not</strong> upload or transmit raw GPS coordinates to any server.</li>
+    <li>We do <strong>not</strong> build a live location map visible to other users.</li>
+    <li>We do <strong>not</strong> sell location data to any third party.</li>
+  </ul>
+
+  <h2 style="font-size:16px; font-weight:600; margin-top:24px;">2b. Motion & Fitness Data</h2>
+  <p>
+    We use <code>CMMotionActivityManager</code> to distinguish car driving from walking or
+    cycling. This prevents false trip detections from pedestrians carrying a phone at speed.
+    Motion data is processed locally and is never transmitted or stored beyond the current
+    session.
+  </p>
+
+  <h2 style="font-size:16px; font-weight:600; margin-top:24px;">2c. Trip Statistics</h2>
+  <p>
+    Computed trip statistics (distance, duration, top speed, timestamp) are stored locally
+    on your device. Aggregated totals (total miles, paid miles) may be submitted to our
+    leaderboard API in anonymized form, associated only with your Robinhood Chain wallet
+    address — not your name, email, or phone number.
+  </p>
+
+  <h2 style="font-size:16px; font-weight:600; margin-top:24px;">2d. Wallet Address</h2>
+  <p>
+    You may optionally provide a Robinhood Chain wallet address (a public blockchain address).
+    This is stored locally and submitted to our API only to associate your paid miles with
+    your wallet for token distribution. Wallet addresses are public by nature of blockchain
+    technology.
+  </p>
+
+  <h2 style="font-size:16px; font-weight:600; margin-top:24px;">2e. Notifications</h2>
+  <p>
+    If you grant notification permission, we send local push notifications when a trip ends.
+    We do not use push tokens for marketing.
+  </p>
+
+  <h2>3. What We Do Not Collect</h2>
+  <ul>
+    <li>Your name, email address, or phone number</li>
+    <li>Photos, contacts, or microphone access</li>
+    <li>Advertising identifiers (IDFA)</li>
+    <li>Any data linked to your Apple ID</li>
+    <li>Payment information</li>
+  </ul>
+
+  <h2>4. How We Use Your Data</h2>
+  <ul>
+    <li><strong>Trip detection</strong> — to automatically start and stop recording a drive</li>
+    <li><strong>Distance measurement</strong> — to calculate verified paid miles</li>
+    <li><strong>Road verification</strong> — to confirm driving occurred on a mapped public road</li>
+    <li><strong>Leaderboard</strong> — to display anonymized mileage rankings (wallet address only)</li>
+    <li><strong>Token distribution</strong> — to queue TSLA crumb payouts to your wallet address</li>
+  </ul>
+
+  <h2>5. Third-Party Services</h2>
+  <ul>
+    <li><strong>Apple MapKit</strong> — used for the map display. Governed by Apple's privacy policy.</li>
+    <li><strong>Robinhood Chain (chain ID 4663)</strong> — a public blockchain. Transactions on-chain are public by design.</li>
+  </ul>
+  <p>We do not integrate any advertising SDKs, analytics SDKs (e.g. Firebase, Mixpanel), or social login providers.</p>
+
+  <h2>6. Data Retention</h2>
+  <ul>
+    <li>Trip data on your device: retained until you delete the app or clear app data.</li>
+    <li>Leaderboard entries (wallet address + mileage): retained for the duration of the program.</li>
+    <li>You can delete all local data by deleting the app from your device.</li>
+  </ul>
+
+  <h2>7. Children's Privacy</h2>
+  <p>
+    $MILES is rated 4+ on the App Store but is intended for licensed drivers (typically 16+).
+    We do not knowingly collect data from children under 13. If you believe a child has
+    submitted data, contact us and we will delete it.
+  </p>
+
+  <h2>8. Your Rights</h2>
+  <p>
+    Because we don't collect personally identifiable information, most data deletion is
+    accomplished simply by deleting the app. For any leaderboard data associated with your
+    wallet address, email us and we will remove it within 30 days.
+  </p>
+  <p>
+    If you are in the EU/EEA, you have rights under GDPR including access, rectification,
+    and erasure. Contact us to exercise these rights.
+  </p>
+
+  <h2>9. Security</h2>
+  <p>
+    All communication with our API uses HTTPS/TLS. Trip data is stored in SwiftData on your
+    device, which is protected by iOS device encryption. We do not store raw GPS data on our
+    servers.
+  </p>
+
+  <h2>10. Changes to This Policy</h2>
+  <p>
+    We may update this policy as the app evolves. Material changes will be noted in the
+    App Store "What's New" section and by updating the effective date above.
+  </p>
+
+  <h2>11. Contact</h2>
+  <p>
+    Questions about this privacy policy? Email us at
+    <a href="mailto:privacy@miles.app">privacy@miles.app</a>
+    or visit <a href="https://miles.app">miles.app</a>.
+  </p>
+
+  <div class="card" style="margin-top:48px;">
+    <p style="font-size:13px;">
+      <span class="highlight">Not affiliated with Tesla, Inc. or Robinhood Markets.</span>
+      Tokenized TSLA distributed by $MILES is not a security, not a brokerage product,
+      and is not guaranteed to maintain any particular value. This is not investment advice.
+    </p>
+  </div>
+</main>
+
+<footer>
+  &copy; 2026 $MILES &nbsp;·&nbsp;
+  <a href="https://miles.app">miles.app</a> &nbsp;·&nbsp;
+  <a href="mailto:privacy@miles.app">privacy@miles.app</a>
+</footer>
+
+</body>
+</html>
