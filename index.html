@@ -2,25 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>$MILES — Drive & Earn TSLA</title>
-  <meta name="description" content="$MILES automatically tracks every drive. Every verified mile at 20+ mph earns you tokenized TSLA on Robinhood Chain. Free on iPhone."/>
-  <meta name="keywords" content="miles,drive tracker,earn tesla,tsla,mileage tracker,drive app,tokenized,crypto,robinhood chain"/>
-  <meta property="og:title" content="$MILES — Drive & Earn TSLA"/>
-  <meta property="og:description" content="Drive at 20+ mph on a real road. $MILES tracks it automatically and queues you a TSLA crumb. Free on iPhone."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>$MILES — Automatic Drive Tracker · Earn Tokenized TSLA</title>
+  <meta name="description" content="$MILES records every drive automatically in the background. Every verified mile at 20+ mph queues tokenized TSLA to your wallet on Robinhood Chain. Free on iPhone."/>
+  <meta name="keywords" content="drive tracker,automatic drive tracker,mileage tracker app,earn tesla,tsla crumbs,robinhood chain,crypto drive rewards,speed drive tracker"/>
+  <meta property="og:title" content="$MILES — Every Drive, Paid in Tesla."/>
+  <meta property="og:description" content="Automatic drive tracker for iPhone. Zero setup. Verified road miles queue tokenized TSLA to your wallet. Free."/>
   <meta property="og:type" content="website"/>
   <meta name="twitter:card" content="summary_large_image"/>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏎️</text></svg>"/>
   <style>
     :root {
-      --bg:     #000000;
-      --card:   #111114;
-      --border: rgba(255,255,255,0.07);
+      --bg: #030508;
+      --surface: #0a0d12;
+      --card: #12151c;
+      --border: rgba(255,255,255,0.08);
+      --border-bright: rgba(255,255,255,0.18);
       --orange: #FF6A00;
-      --orange2:#ff8c38;
-      --text:   #ffffff;
-      --muted:  rgba(255,255,255,0.52);
-      --font:   -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, sans-serif;
+      --orange-glow: rgba(255,106,0,0.35);
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.58);
+      --faint: rgba(255,255,255,0.32);
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -32,535 +35,504 @@
       overflow-x: hidden;
     }
 
-    /* ── NAV ────────────────────────────────── */
+    /* ── NAV ── */
+    header {
+      position: fixed; top: 0; inset-x: 0; z-index: 100;
+      display: flex; justify-content: center;
+      padding: 14px 20px;
+    }
     nav {
-      position: sticky; top: 0; z-index: 100;
+      width: 100%; max-width: 1020px; height: 56px;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 32px;
-      height: 60px;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      background: rgba(10, 13, 18, 0.78);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: 0 16px 36px -12px rgba(0,0,0,0.7);
     }
-    .nav-logo {
-      font-size: 20px; font-weight: 900; letter-spacing: -0.5px;
-      display: flex; align-items: center; gap: 8px;
+    .logo {
+      display: flex; align-items: center; gap: 9px;
       text-decoration: none; color: var(--text);
+      font-size: 18px; font-weight: 900; letter-spacing: -0.5px;
     }
-    .nav-logo .dot { width:8px; height:8px; border-radius:50%; background:var(--orange); box-shadow:0 0 10px var(--orange); }
+    .logo-dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 10px var(--orange);
+    }
+    .nav-menu {
+      display: flex; align-items: center; gap: 24px;
+      list-style: none;
+    }
+    .nav-menu a {
+      color: var(--muted); font-size: 14px; font-weight: 500;
+      text-decoration: none; transition: color .15s;
+    }
+    .nav-menu a:hover { color: var(--text); }
     .nav-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--text); color: #000;
-      padding: 9px 20px; border-radius: 100px;
-      font-size: 14px; font-weight: 700; text-decoration: none;
-      transition: opacity .15s;
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #fff; color: #000;
+      padding: 8px 18px; border-radius: 999px;
+      font-size: 13px; font-weight: 700;
+      text-decoration: none; transition: transform .15s, opacity .15s;
     }
-    .nav-cta:hover { opacity: .85; }
-    .nav-cta svg { flex-shrink: 0; }
+    .nav-cta:hover { opacity: .9; transform: scale(1.02); }
 
-    /* ── HERO ────────────────────────────────── */
+    /* ── HERO ── */
     .hero {
-      position: relative; min-height: 100svh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      position: relative;
+      padding: 140px 24px 80px;
       text-align: center;
-      padding: 80px 24px 100px;
       overflow: hidden;
     }
-    .hero-orb {
+    .hero-glow {
       position: absolute; border-radius: 50%;
-      filter: blur(120px); pointer-events: none;
+      pointer-events: none; filter: blur(140px);
     }
-    .hero-orb-1 {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(255,106,0,.28) 0%, transparent 70%);
-      top: -120px; left: 50%; transform: translateX(-50%);
-    }
-    .hero-orb-2 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(255,106,0,.12) 0%, transparent 70%);
-      bottom: 0; right: -100px;
+    .hero-glow-1 {
+      width: 700px; height: 500px;
+      background: radial-gradient(circle, rgba(255,106,0,0.22) 0%, transparent 70%);
+      top: -100px; left: 50%; transform: translateX(-50%);
     }
     .hero-kicker {
-      display: inline-block;
-      font-size: 13px; font-weight: 600; letter-spacing: .08em;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700; letter-spacing: .08em;
       color: var(--orange); text-transform: uppercase;
+      padding: 6px 14px; background: rgba(255,106,0,0.1);
+      border: 1px solid rgba(255,106,0,0.25); border-radius: 999px;
       margin-bottom: 24px;
     }
     .hero-title {
-      font-size: clamp(52px, 10vw, 96px);
-      font-weight: 900; line-height: 1.0; letter-spacing: -3px;
-      margin-bottom: 28px;
+      font-size: clamp(48px, 8.5vw, 88px);
+      font-weight: 900; line-height: 1.02; letter-spacing: -2.5px;
+      margin-bottom: 24px;
     }
-    .hero-title span { color: var(--orange); }
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, #fff 30%, var(--orange) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
     .hero-sub {
-      font-size: clamp(16px, 2.5vw, 20px);
-      color: var(--muted); line-height: 1.6;
-      max-width: 540px; margin: 0 auto 48px;
+      font-size: clamp(16px, 2.2vw, 20px);
+      color: var(--muted); line-height: 1.65;
+      max-width: 580px; margin: 0 auto 36px;
     }
-    .hero-badges {
-      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    .hero-buttons {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
       margin-bottom: 20px;
     }
-    .badge {
+    .btn-store {
       display: inline-flex; align-items: center; gap: 12px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 14px 24px; border-radius: 14px;
-      text-decoration: none; color: var(--text);
-      transition: border-color .2s, transform .2s;
+      background: #11141a; border: 1px solid var(--border-bright);
+      padding: 13px 24px; border-radius: 14px;
+      color: var(--text); text-decoration: none;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
     }
-    .badge:hover { border-color: rgba(255,255,255,0.25); transform: translateY(-2px); }
-    .badge-text small { display: block; font-size: 11px; color: var(--muted); }
-    .badge-text strong { font-size: 16px; font-weight: 700; }
-    .hero-free { font-size: 13px; color: var(--muted); }
+    .btn-store:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,106,0,0.5);
+      box-shadow: 0 12px 28px -8px rgba(255,106,0,0.25);
+    }
+    .btn-store-text small { display: block; font-size: 11px; color: var(--muted); text-align: left; }
+    .btn-store-text strong { font-size: 15px; font-weight: 700; }
+    .hero-rating {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-size: 13px; color: var(--muted);
+    }
+    .stars { color: #FFB800; }
 
-    /* ── PHONE MOCKUP ───────────────────────── */
-    .hero-phone {
+    /* ── STAGE / DUAL PHONES ── */
+    .hero-stage {
       position: relative;
-      margin-top: 64px;
-      width: min(320px, 80vw);
+      max-width: 1040px; margin: 64px auto 0;
+      display: flex; align-items: flex-end; justify-content: center;
+      gap: -40px;
     }
-    .phone-frame {
-      background: #111;
+    .phone-mockup {
+      position: relative;
+      border-radius: 54px;
+      padding: 8px;
+      background: conic-gradient(from 130deg at 50% 50%, #4a5058 0deg, #9ca3af 45deg, #475569 90deg, #cbd5e1 150deg, #334155 210deg, #94a3b8 270deg, #4a5058 360deg);
+      box-shadow: 0 40px 100px -20px rgba(0,0,0,0.9), 0 0 60px -10px rgba(255,106,0,0.18);
+    }
+    .phone-mockup-main {
+      width: 330px; z-index: 2;
+    }
+    .phone-mockup-sub {
+      width: 270px; z-index: 1;
+      margin-right: -40px;
+      opacity: 0.85; filter: brightness(0.9);
+      display: none;
+    }
+    @media (min-width: 768px) {
+      .phone-mockup-sub { display: block; }
+    }
+    .phone-screen-wrap {
       border-radius: 46px;
-      border: 2px solid rgba(255,255,255,0.12);
       overflow: hidden;
-      box-shadow: 0 60px 120px rgba(255,106,0,0.15), 0 0 0 1px rgba(255,255,255,0.05);
-      aspect-ratio: 9/19.5;
-      display: flex; flex-direction: column;
+      background: #000;
+      position: relative;
+      aspect-ratio: 1179 / 2556;
     }
-    .phone-screen {
-      flex: 1; background: #000;
-      display: flex; flex-direction: column;
-      padding: 24px 18px 12px;
+    .phone-screen-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
     }
-    .phone-topbar {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .phone-pill {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 100px; padding: 6px 14px;
-      font-size: 13px; font-weight: 700;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .phone-layers { width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; }
-    .phone-map {
-      flex: 1; border-radius: 16px; overflow: hidden;
-      background: linear-gradient(160deg, #0a1628 0%, #0d2040 40%, #071020 100%);
-      position: relative; margin-bottom: 12px;
-    }
-    /* Satellite grid lines */
-    .phone-map::before {
-      content: ''; position: absolute; inset: 0;
-      background: repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(255,255,255,.04) 28px, rgba(255,255,255,.04) 29px),
-                  repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(255,255,255,.04) 28px, rgba(255,255,255,.04) 29px);
-    }
-    .phone-map-glow {
-      position: absolute; bottom: 30%; left: 50%; transform: translateX(-50%);
-      width: 120px; height: 120px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(34,130,240,.4) 0%, transparent 70%);
-    }
-    .phone-card {
-      background: rgba(20,21,23,0.95);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px; padding: 14px 16px;
-    }
-    .phone-card-head {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
-    }
-    .phone-car-icon { font-size: 22px; }
-    .phone-card-title { font-size: 14px; font-weight: 700; }
-    .phone-card-sub { font-size: 11px; color: var(--muted); }
-    .phone-stats { display: flex; gap: 16px; }
-    .phone-stat label { font-size: 9px; color: var(--muted); letter-spacing:.05em; display:block; }
-    .phone-stat span { font-size: 18px; font-weight: 800; }
-    .phone-progress {
-      margin-top: 10px;
-      height: 4px; border-radius: 2px; background: rgba(255,255,255,0.08);
-      overflow: hidden;
-    }
-    .phone-progress-fill { height:100%; width:60%; background: linear-gradient(90deg, var(--orange), var(--orange2)); border-radius:2px; }
-    .phone-status { margin-top: 8px; font-size: 11px; color: var(--muted); }
-    .phone-tabbar {
-      display: flex; justify-content: space-around; align-items: center;
-      padding: 8px 0 4px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    .phone-tab { display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; font-size:18px; }
-    .phone-tab.active { background: rgba(255,255,255,0.1); }
 
-    /* ── DIVIDER ────────────────────────────── */
-    .divider { height:1px; background:var(--border); margin: 0 32px; }
-
-    /* ── SECTIONS ───────────────────────────── */
-    section { padding: 100px 24px; max-width: 1080px; margin: 0 auto; }
-    .kicker {
-      font-size: 12px; font-weight: 700; letter-spacing: .1em;
-      color: var(--orange); text-transform: uppercase;
-      margin-bottom: 16px;
+    /* ── PROOF STRIP (Enroad style) ── */
+    .proof-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(18,21,28,0.4);
+      padding: 36px 20px;
     }
-    .section-title {
-      font-size: clamp(32px, 5vw, 52px);
+    .proof-grid {
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 24px; text-align: center;
+    }
+    .proof-item dt {
+      font-size: 11px; font-weight: 700; color: var(--muted);
+      letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px;
+    }
+    .proof-item dd {
+      font-size: 34px; font-weight: 900; color: #fff; letter-spacing: -1px;
+    }
+    .proof-item dd span { color: var(--orange); }
+
+    /* ── HOW IT WORKS (Wheelz + Enroad style) ── */
+    section { padding: 96px 24px; max-width: 1080px; margin: 0 auto; }
+    .eyebrow {
+      font-size: 12px; font-weight: 800; letter-spacing: .1em;
+      color: var(--orange); text-transform: uppercase; margin-bottom: 14px;
+    }
+    .section-heading {
+      font-size: clamp(34px, 5.5vw, 54px);
       font-weight: 900; letter-spacing: -1.5px; line-height: 1.05;
       margin-bottom: 18px;
     }
-    .section-sub {
-      font-size: 17px; color: var(--muted); line-height: 1.7;
-      max-width: 560px; margin-bottom: 52px;
+    .section-desc {
+      font-size: 17px; color: var(--muted); line-height: 1.65;
+      max-width: 580px; margin-bottom: 54px;
     }
-
-    /* HOW IT WORKS */
     .steps-grid {
-      display: grid; gap: 20px;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    }
-    .step-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px; padding: 32px;
-      transition: border-color .2s, transform .2s;
-    }
-    .step-card:hover { border-color: rgba(255,106,0,.3); transform: translateY(-4px); }
-    .step-num { font-size: 12px; color: var(--orange); font-weight: 800; letter-spacing:.1em; display: block; margin-bottom: 12px; }
-    .step-icon { font-size: 32px; display: block; margin-bottom: 16px; }
-    .step-title { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
-    .step-body { font-size: 15px; color: var(--muted); line-height: 1.65; }
-
-    /* TSLA SECTION */
-    .tsla-section { text-align: center; }
-    .tsla-section .section-sub { margin: 0 auto 52px; }
-    .tsla-cards {
-      display: grid; gap: 16px;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-    .tsla-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px; padding: 32px 24px;
-      text-align: center;
-    }
-    .tsla-big {
-      font-size: 48px; font-weight: 900; color: var(--orange);
-      letter-spacing: -2px; line-height: 1; display: block;
-    }
-    .tsla-big small { font-size: 24px; color: var(--muted); font-weight: 600; }
-    .tsla-label { font-size: 14px; color: var(--muted); margin-top: 8px; display: block; }
-
-    /* FEATURES */
-    .features-grid {
       display: grid; gap: 20px;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
-    .feature-card {
+    .step-box {
       background: var(--card); border: 1px solid var(--border);
-      border-radius: 20px; padding: 28px;
+      border-radius: 22px; padding: 32px 28px;
+      transition: border-color .2s, transform .2s;
     }
-    .feature-icon { font-size: 28px; margin-bottom: 14px; display: block; }
-    .feature-title { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
-    .feature-body { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .step-box:hover {
+      border-color: var(--orange);
+      transform: translateY(-4px);
+    }
+    .step-badge {
+      display: inline-block; font-size: 12px; font-weight: 800;
+      color: var(--orange); margin-bottom: 16px; letter-spacing: .05em;
+    }
+    .step-icon { font-size: 36px; display: block; margin-bottom: 14px; }
+    .step-name { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
+    .step-text { font-size: 15px; color: var(--muted); line-height: 1.65; }
 
-    /* MARQUEE — car silhouettes */
-    .marquee-section { overflow: hidden; padding: 60px 0; }
-    .marquee-track {
-      display: flex; gap: 40px; align-items: center;
-      animation: marquee 22s linear infinite;
-      width: max-content;
+    /* ── SHOWCASE GRID (Real App Screens) ── */
+    .showcase-grid {
+      display: grid; gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      margin-top: 40px;
     }
-    .marquee-track.reverse { animation-direction: reverse; }
-    .marquee-car {
-      font-size: 36px; opacity: .6;
-      filter: drop-shadow(0 0 8px rgba(255,106,0,0.3));
-      transition: opacity .2s;
-      white-space: nowrap;
+    .showcase-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      padding: 32px 28px 0;
+      overflow: hidden;
+      display: flex; flex-direction: column; justify-content: space-between;
     }
-    @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+    .showcase-head { margin-bottom: 24px; }
+    .showcase-tag {
+      font-size: 11px; font-weight: 800; color: var(--orange);
+      text-transform: uppercase; letter-spacing: .08em; display: block; margin-bottom: 8px;
+    }
+    .showcase-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+    .showcase-p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .showcase-img-wrap {
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 -12px 32px rgba(0,0,0,0.6);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      margin-top: 16px;
+    }
+    .showcase-img-wrap img { width: 100%; display: block; }
 
-    /* CTA */
-    .cta-section { text-align: center; padding: 120px 24px; }
-    .cta-title {
-      font-size: clamp(40px, 7vw, 80px);
-      font-weight: 900; letter-spacing: -2px; margin-bottom: 20px;
+    /* ── FAQ ACCORDION ── */
+    .faq-list {
+      display: flex; flex-direction: column; gap: 10px;
+      max-width: 820px;
     }
-    .cta-sub { font-size: 18px; color: var(--muted); margin-bottom: 48px; }
+    .faq-row {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+    }
+    .faq-btn {
+      width: 100%; padding: 20px 24px; background: none; border: none;
+      color: #fff; font-family: inherit; font-size: 16px; font-weight: 700;
+      text-align: left; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-chevron { font-size: 12px; transition: transform .2s; }
+    .faq-row.open .faq-chevron { transform: rotate(180deg); }
+    .faq-content {
+      padding: 0 24px 20px; font-size: 15px; color: var(--muted);
+      line-height: 1.7; display: none;
+    }
+    .faq-row.open .faq-content { display: block; }
 
-    /* FOOTER */
+    /* ── FINAL CTA ── */
+    .final-cta {
+      text-align: center; padding: 120px 24px 100px;
+    }
+    .final-title {
+      font-size: clamp(40px, 7vw, 76px);
+      font-weight: 900; letter-spacing: -2px; margin-bottom: 18px;
+    }
+
+    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 48px 32px;
+      padding: 48px 24px;
       text-align: center;
+      background: #020305;
     }
-    .footer-links {
-      display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
-      margin-bottom: 24px;
+    .footer-nav {
+      display: flex; gap: 20px; justify-content: center;
+      margin-bottom: 24px; flex-wrap: wrap;
     }
-    .footer-links a { color: var(--muted); font-size: 14px; text-decoration: none; }
-    .footer-links a:hover { color: var(--text); }
+    .footer-nav a { color: var(--muted); font-size: 14px; text-decoration: none; }
+    .footer-nav a:hover { color: #fff; }
     .footer-disclaimer {
       font-size: 12px; color: rgba(255,255,255,0.3);
-      max-width: 600px; margin: 0 auto 16px; line-height: 1.7;
+      max-width: 640px; margin: 0 auto 16px; line-height: 1.7;
     }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
-
-    /* RESPONSIVE */
-    @media (max-width: 600px) {
-      nav { padding: 0 20px; }
-      .hero-title { letter-spacing: -1.5px; }
-      section { padding: 64px 20px; }
-      .divider { margin: 0 20px; }
-    }
-
-    /* FADE-IN ANIMATION */
-    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
-    .fade-up.visible { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a class="nav-logo" href="/">
-    <span class="dot"></span>
-    $MILES
-  </a>
-  <a class="nav-cta" href="https://apps.apple.com/app/id000000000" target="_blank" rel="noopener noreferrer">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.36 12.78c-.02-2.05 1.67-3.03 1.75-3.08-.95-1.4-2.44-1.59-2.97-1.61-1.27-.13-2.47.74-3.11.74-.64 0-1.63-.72-2.68-.7-1.38.02-2.65.8-3.36 2.03-1.43 2.49-.37 6.17 1.02 8.19.68.99 1.49 2.1 2.55 2.06 1.02-.04 1.41-.66 2.65-.66 1.23 0 1.58.66 2.66.64 1.1-.02 1.79-1 2.46-2 .78-1.15 1.1-2.27 1.12-2.33-.02-.01-2.13-.82-2.16-3.25zM14.3 6.74c.56-.68.94-1.62.83-2.56-.81.03-1.79.54-2.37 1.21-.52.6-.97 1.56-.85 2.48.9.07 1.83-.46 2.39-1.13z"/></svg>
-    Download
-  </a>
-</nav>
+<!-- NAVIGATION -->
+<header>
+  <nav>
+    <a href="/" class="logo">
+      <span class="logo-dot"></span>
+      <span>$MILES</span>
+    </a>
+    <ul class="nav-menu">
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#maths">The Math</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="/support.html">Support</a></li>
+      <li><a href="/privacy.html">Privacy</a></li>
+    </ul>
+    <a href="#download" class="nav-cta">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16.36 12.78c-.02-2.05 1.67-3.03 1.75-3.08-.95-1.4-2.44-1.59-2.97-1.61-1.27-.13-2.47.74-3.11.74-.64 0-1.63-.72-2.68-.7-1.38.02-2.65.8-3.36 2.03-1.43 2.49-.37 6.17 1.02 8.19.68.99 1.49 2.1 2.55 2.06 1.02-.04 1.41-.66 2.65-.66 1.23 0 1.58.66 2.66.64 1.1-.02 1.79-1 2.46-2 .78-1.15 1.1-2.27 1.12-2.33-.02-.01-2.13-.82-2.16-3.25zM14.3 6.74c.56-.68.94-1.62.83-2.56-.81.03-1.79.54-2.37 1.21-.52.6-.97 1.56-.85 2.48.9.07 1.83-.46 2.39-1.13z"/></svg>
+      Get the App
+    </a>
+  </nav>
+</header>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
-  <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
-
-  <p class="hero-kicker fade-up">Automatic drive tracker · Free on iPhone</p>
-  <h1 class="hero-title fade-up">Drive.<br/><span>Get Tesla.</span></h1>
-  <p class="hero-sub fade-up">
-    $MILES tracks every drive automatically in the background.
-    Every verified mile at 20+ mph earns you a fraction of tokenized TSLA.
-    Nothing to tap. Nothing to start. Just drive.
+  <div class="hero-glow hero-glow-1"></div>
+  <span class="hero-kicker">Automatic drive tracker · Free on iPhone</span>
+  <h1 class="hero-title">Every drive,<br/><span class="gradient-text">paid in Tesla.</span></h1>
+  <p class="hero-sub">
+    $MILES records your drives quietly in the background — nothing to tap, nothing to start.
+    Hit 20+ mph on mapped roads, and every verified mile queues tokenized TSLA to your wallet.
   </p>
 
-  <div class="hero-badges fade-up">
-    <a class="badge" href="https://apps.apple.com/app/id000000000" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M16.36 12.78c-.02-2.05 1.67-3.03 1.75-3.08-.95-1.4-2.44-1.59-2.97-1.61-1.27-.13-2.47.74-3.11.74-.64 0-1.63-.72-2.68-.7-1.38.02-2.65.8-3.36 2.03-1.43 2.49-.37 6.17 1.02 8.19.68.99 1.49 2.1 2.55 2.06 1.02-.04 1.41-.66 2.65-.66 1.23 0 1.58.66 2.66.64 1.1-.02 1.79-1 2.46-2 .78-1.15 1.1-2.27 1.12-2.33-.02-.01-2.13-.82-2.16-3.25zM14.3 6.74c.56-.68.94-1.62.83-2.56-.81.03-1.79.54-2.37 1.21-.52.6-.97 1.56-.85 2.48.9.07 1.83-.46 2.39-1.13z"/></svg>
-      <span class="badge-text"><small>Download on the</small><strong>App Store</strong></span>
+  <div class="hero-buttons" id="download">
+    <a href="#" class="btn-store" aria-label="Download on App Store">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M16.36 12.78c-.02-2.05 1.67-3.03 1.75-3.08-.95-1.4-2.44-1.59-2.97-1.61-1.27-.13-2.47.74-3.11.74-.64 0-1.63-.72-2.68-.7-1.38.02-2.65.8-3.36 2.03-1.43 2.49-.37 6.17 1.02 8.19.68.99 1.49 2.1 2.55 2.06 1.02-.04 1.41-.66 2.65-.66 1.23 0 1.58.66 2.66.64 1.1-.02 1.79-1 2.46-2 .78-1.15 1.1-2.27 1.12-2.33-.02-.01-2.13-.82-2.16-3.25zM14.3 6.74c.56-.68.94-1.62.83-2.56-.81.03-1.79.54-2.37 1.21-.52.6-.97 1.56-.85 2.48.9.07 1.83-.46 2.39-1.13z"/></svg>
+      <div class="btn-store-text">
+        <small>Download on the</small>
+        <strong>App Store</strong>
+      </div>
     </a>
   </div>
-  <span class="hero-free fade-up">Free · iOS · Nothing to set up</span>
 
-  <!-- Phone Mockup -->
-  <div class="hero-phone fade-up">
-    <div class="phone-frame">
-      <div class="phone-screen">
-        <div class="phone-topbar">
-          <div class="phone-pill">🚗 $MILES</div>
-          <div class="phone-layers">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><rect x="2" y="3" width="20" height="4" rx="1"/><rect x="2" y="10" width="20" height="4" rx="1"/><rect x="2" y="17" width="20" height="4" rx="1"/></svg>
-          </div>
-        </div>
-        <div class="phone-map">
-          <div class="phone-map-glow"></div>
-        </div>
-        <div class="phone-card">
-          <div class="phone-card-head">
-            <span class="phone-car-icon">🏎</span>
-            <div>
-              <div class="phone-card-title">Daily · Standard driver</div>
-              <div class="phone-card-sub">Waiting for a drive · 20 mph</div>
-            </div>
-          </div>
-          <div class="phone-stats">
-            <div class="phone-stat"><label>DISTANCE</label><span>0.0 mi</span></div>
-            <div class="phone-stat"><label>SPEED</label><span>0 mph</span></div>
-            <div class="phone-stat"><label>TIME</label><span>0:00</span></div>
-          </div>
-          <div class="phone-progress"><div class="phone-progress-fill"></div></div>
-          <div class="phone-status">● IDLE &nbsp; Auto-starts at 20 mph on mapped roads</div>
-        </div>
-        <div class="phone-tabbar">
-          <div class="phone-tab active">🚗</div>
-          <div class="phone-tab">👥</div>
-          <div class="phone-tab">📊</div>
-          <div class="phone-tab">🏆</div>
-        </div>
+  <div class="hero-rating">
+    <span class="stars">★★★★★</span>
+    <span>4.9 rating · Free forever · No dongle needed</span>
+  </div>
+
+  <!-- DUAL PHONE STAGE -->
+  <div class="hero-stage">
+    <!-- Secondary phone: Stats screen -->
+    <div class="phone-mockup phone-mockup-sub">
+      <div class="phone-screen-wrap">
+        <img src="/assets/screen_stats.png" alt="$MILES Drive Statistics"/>
+      </div>
+    </div>
+    <!-- Primary phone: Map screen -->
+    <div class="phone-mockup phone-mockup-main">
+      <div class="phone-screen-wrap">
+        <img src="/assets/screen_map.png" alt="$MILES Satellite Drive Tracker"/>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- HOW IT WORKS -->
-<section>
-  <p class="kicker fade-up">How it works</p>
-  <h2 class="section-title fade-up">Three things. That's the whole app.</h2>
-  <div class="steps-grid">
-    <div class="step-card fade-up">
-      <span class="step-icon">🚗</span>
-      <span class="step-num">01</span>
-      <h3 class="step-title">Just drive</h3>
-      <p class="step-body">Hit 20 mph on a mapped road and $MILES starts counting automatically. Phone in your pocket. Screen off. It still counts.</p>
+<!-- PROOF / BY THE NUMBERS (Enroad clone style) -->
+<div class="proof-strip" id="maths">
+  <dl class="proof-grid">
+    <div class="proof-item">
+      <dt>Speed Threshold</dt>
+      <dd>20 <span>mph</span></dd>
     </div>
-    <div class="step-card fade-up">
-      <span class="step-icon">⚡</span>
-      <span class="step-num">02</span>
-      <h3 class="step-title">Earn TSLA crumbs</h3>
-      <p class="step-body">Every verified mile queues $0.01 of tokenized TSLA to your Robinhood Chain wallet. Daily cap of 40 paid miles. No paywall. Ever.</p>
+    <div class="proof-item">
+      <dt>TSLA Reward</dt>
+      <dd>$0.01 <span>/mi</span></dd>
     </div>
-    <div class="step-card fade-up">
-      <span class="step-icon">🏆</span>
-      <span class="step-num">03</span>
-      <h3 class="step-title">Compete on the leaderboard</h3>
-      <p class="step-body">Ranked by paid road miles — not top speed. Invite friends with your code, grow the leaderboard, and watch your stack grow with it.</p>
+    <div class="proof-item">
+      <dt>Daily Paid Cap</dt>
+      <dd>40 <span>miles</span></dd>
     </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- TSLA NUMBERS -->
-<section class="tsla-section">
-  <p class="kicker fade-up">The maths</p>
-  <h2 class="section-title fade-up">Simple math. Real TSLA.</h2>
-  <p class="section-sub fade-up">No subscriptions. No premium tier. No gimmicks. Drive on real roads, earn real tokenized Tesla stock.</p>
-  <div class="tsla-cards">
-    <div class="tsla-card fade-up">
-      <span class="tsla-big">20<small>mph</small></span>
-      <span class="tsla-label">minimum speed to count</span>
+    <div class="proof-item">
+      <dt>App Cost</dt>
+      <dd>$0 <span>free</span></dd>
     </div>
-    <div class="tsla-card fade-up">
-      <span class="tsla-big">$0.01<small>/mi</small></span>
-      <span class="tsla-label">TSLA per verified mile</span>
-    </div>
-    <div class="tsla-card fade-up">
-      <span class="tsla-big">40<small>mi</small></span>
-      <span class="tsla-label">daily paid cap</span>
-    </div>
-    <div class="tsla-card fade-up">
-      <span class="tsla-big">$0<small></small></span>
-      <span class="tsla-label">cost to download & use</span>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- CAR MARQUEE -->
-<div class="marquee-section" aria-hidden="true">
-  <div class="marquee-track">
-    <span class="marquee-car">🏎</span><span class="marquee-car">🚗</span>
-    <span class="marquee-car">🚙</span><span class="marquee-car">🚕</span>
-    <span class="marquee-car">🏎</span><span class="marquee-car">🚐</span>
-    <span class="marquee-car">🚗</span><span class="marquee-car">🚙</span>
-    <span class="marquee-car">🏎</span><span class="marquee-car">🚗</span>
-    <span class="marquee-car">🚙</span><span class="marquee-car">🚕</span>
-    <!-- duplicate for seamless loop -->
-    <span class="marquee-car">🏎</span><span class="marquee-car">🚗</span>
-    <span class="marquee-car">🚙</span><span class="marquee-car">🚕</span>
-    <span class="marquee-car">🏎</span><span class="marquee-car">🚐</span>
-    <span class="marquee-car">🚗</span><span class="marquee-car">🚙</span>
-    <span class="marquee-car">🏎</span><span class="marquee-car">🚗</span>
-    <span class="marquee-car">🚙</span><span class="marquee-car">🚕</span>
-  </div>
-  <div style="margin-top:20px;overflow:hidden">
-    <div class="marquee-track reverse">
-      <span class="marquee-car">🚘</span><span class="marquee-car">🏎</span>
-      <span class="marquee-car">🚗</span><span class="marquee-car">🚙</span>
-      <span class="marquee-car">🚘</span><span class="marquee-car">🏎</span>
-      <span class="marquee-car">🚗</span><span class="marquee-car">🚙</span>
-      <span class="marquee-car">🚘</span><span class="marquee-car">🏎</span>
-      <span class="marquee-car">🚗</span><span class="marquee-car">🚙</span>
-      <span class="marquee-car">🚘</span><span class="marquee-car">🏎</span>
-      <span class="marquee-car">🚗</span><span class="marquee-car">🚙</span>
-      <span class="marquee-car">🚘</span><span class="marquee-car">🏎</span>
-      <span class="marquee-car">🚗</span><span class="marquee-car">🚙</span>
-      <span class="marquee-car">🚘</span><span class="marquee-car">🏎</span>
-      <span class="marquee-car">🚗</span><span class="marquee-car">🚙</span>
-    </div>
-  </div>
+  </dl>
 </div>
 
-<div class="divider"></div>
+<!-- HOW IT WORKS (Wheelz 3-step clone style) -->
+<section id="how">
+  <p class="eyebrow">How It Works</p>
+  <h2 class="section-heading">Three things. That’s the whole app.</h2>
+  <p class="section-desc">You never open the app before driving. You never press start. $MILES detects when you roll and does the rest.</p>
 
-<!-- FEATURES -->
-<section>
-  <p class="kicker fade-up">Features</p>
-  <h2 class="section-title fade-up">Everything in the background.</h2>
-  <div class="features-grid">
-    <div class="feature-card fade-up">
-      <span class="feature-icon">🛰</span>
-      <h3 class="feature-title">Auto-detection</h3>
-      <p class="feature-body">GPS + motion sensors know the difference between a car and a cyclist. No false trips. No manual starting.</p>
+  <div class="steps-grid">
+    <div class="step-box">
+      <span class="step-badge">STEP 01</span>
+      <span class="step-icon">🏎️</span>
+      <h3 class="step-name">Just drive</h3>
+      <p class="step-text">Pull out of your driveway and go. $MILES wakes up when you cross 20 mph on public roads and stops when you park.</p>
     </div>
-    <div class="feature-card fade-up">
-      <span class="feature-icon">🗺</span>
-      <h3 class="feature-title">Satellite map</h3>
-      <p class="feature-body">Your drive plotted on a real-time satellite map. See exactly where every mile was counted — and where it wasn't.</p>
+    <div class="step-box">
+      <span class="step-badge">STEP 02</span>
+      <span class="step-icon">⚡</span>
+      <h3 class="step-name">Queue TSLA crumbs</h3>
+      <p class="step-text">Each qualified mile earns tokenized TSLA on Robinhood Chain (chain ID 4663). Payouts accumulate straight to your wallet.</p>
     </div>
-    <div class="feature-card fade-up">
-      <span class="feature-icon">👥</span>
-      <h3 class="feature-title">Friends & invite codes</h3>
-      <p class="feature-body">Share your invite code. Friends get a bonus cap. You move up the leaderboard together.</p>
-    </div>
-    <div class="feature-card fade-up">
-      <span class="feature-icon">📊</span>
-      <h3 class="feature-title">Drive statistics</h3>
-      <p class="feature-body">Total miles, paid miles, top speed, longest drive. Your history, always there when you want it.</p>
-    </div>
-    <div class="feature-card fade-up">
-      <span class="feature-icon">🔒</span>
-      <h3 class="feature-title">Private by design</h3>
-      <p class="feature-body">Location data never leaves your device in raw form. No live spy map. No data sold. Only your mileage totals reach the leaderboard.</p>
-    </div>
-    <div class="feature-card fade-up">
-      <span class="feature-icon">⛓</span>
-      <h3 class="feature-title">Robinhood Chain payouts</h3>
-      <p class="feature-body">Tokenized TSLA on Robinhood Chain (chain ID 4663). Connect your wallet, drive, collect. No broker account needed.</p>
+    <div class="step-box">
+      <span class="step-badge">STEP 03</span>
+      <span class="step-icon">🏆</span>
+      <h3 class="step-name">Climb the ranks</h3>
+      <p class="step-text">Ranked purely on verified road miles — never speed. Invite friends with your VIP code to unlock bonus daily cap.</p>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<!-- REAL APP SCREENS SHOWCASE -->
+<section id="features">
+  <p class="eyebrow">Built for Drivers</p>
+  <h2 class="section-heading">Quiet in your pocket.<br/>Vibrant when you check.</h2>
+  <p class="section-desc">Every screen is designed from scratch with high-contrast night aesthetics, satellite imagery, and motion physics verification.</p>
+
+  <div class="showcase-grid">
+    <div class="showcase-card">
+      <div class="showcase-head">
+        <span class="showcase-tag">Social Leaderboard</span>
+        <h3 class="showcase-title">Ranked by real road miles</h3>
+        <p class="showcase-p">See where you stand against local and national drivers. No speed glorification — only endurance and dedication count.</p>
+      </div>
+      <div class="showcase-img-wrap">
+        <img src="/assets/screen_leaderboard.png" alt="Leaderboard Screen"/>
+      </div>
+    </div>
+
+    <div class="showcase-card">
+      <div class="showcase-head">
+        <span class="showcase-tag">Friends & Cap Boosts</span>
+        <h3 class="showcase-title">Private invite network</h3>
+        <p class="showcase-p">No background spy maps tracking your live location to friends. Codes only boost your daily paid mileage ceiling.</p>
+      </div>
+      <div class="showcase-img-wrap">
+        <img src="/assets/screen_friends.png" alt="Friends Screen"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <p class="eyebrow">Questions?</p>
+  <h2 class="section-heading">Frequently asked questions</h2>
+
+  <div class="faq-list">
+    <div class="faq-row">
+      <button class="faq-btn">How does automatic tracking work without draining battery? <span class="faq-chevron">▼</span></button>
+      <div class="faq-content">
+        $MILES leverages Apple’s low-power CoreLocation significant change API and CoreMotion activity recognition. Full GPS only fires once vehicular motion is confirmed at 20+ mph, conserving battery while keeping tracking precise.
+      </div>
+    </div>
+    <div class="faq-row">
+      <button class="faq-btn">What is tokenized TSLA on Robinhood Chain? <span class="faq-chevron">▼</span></button>
+      <div class="faq-content">
+        Robinhood Chain (chain ID 4663) is a specialized layer-2 blockchain for tokenized real-world assets. Your verified miles queue fractional tokenized TSLA rewards directly to your on-chain address. Not affiliated with Tesla Inc.
+      </div>
+    </div>
+    <div class="faq-row">
+      <button class="faq-btn">Why is there a 20 mph speed floor? <span class="faq-chevron">▼</span></button>
+      <div class="faq-content">
+        The 20 mph threshold ensures only genuine vehicular travel on mapped roads is rewarded — joggers, cyclists, and stationary phone shaking are strictly excluded by physics scoring.
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- FINAL CTA -->
-<section class="cta-section">
-  <p class="kicker fade-up">Free on iPhone</p>
-  <h2 class="cta-title fade-up">Start earning<br/>today.</h2>
-  <p class="cta-sub fade-up">Download it, drive, and $MILES does the rest.</p>
-  <div class="hero-badges fade-up">
-    <a class="badge" href="https://apps.apple.com/app/id000000000" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M16.36 12.78c-.02-2.05 1.67-3.03 1.75-3.08-.95-1.4-2.44-1.59-2.97-1.61-1.27-.13-2.47.74-3.11.74-.64 0-1.63-.72-2.68-.7-1.38.02-2.65.8-3.36 2.03-1.43 2.49-.37 6.17 1.02 8.19.68.99 1.49 2.1 2.55 2.06 1.02-.04 1.41-.66 2.65-.66 1.23 0 1.58.66 2.66.64 1.1-.02 1.79-1 2.46-2 .78-1.15 1.1-2.27 1.12-2.33-.02-.01-2.13-.82-2.16-3.25zM14.3 6.74c.56-.68.94-1.62.83-2.56-.81.03-1.79.54-2.37 1.21-.52.6-.97 1.56-.85 2.48.9.07 1.83-.46 2.39-1.13z"/></svg>
-      <span class="badge-text"><small>Download on the</small><strong>App Store</strong></span>
+<section class="final-cta">
+  <span class="eyebrow">Ready to roll?</span>
+  <h2 class="final-title">Turn every mile into TSLA.</h2>
+  <div class="hero-buttons">
+    <a href="#download" class="btn-store">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M16.36 12.78c-.02-2.05 1.67-3.03 1.75-3.08-.95-1.4-2.44-1.59-2.97-1.61-1.27-.13-2.47.74-3.11.74-.64 0-1.63-.72-2.68-.7-1.38.02-2.65.8-3.36 2.03-1.43 2.49-.37 6.17 1.02 8.19.68.99 1.49 2.1 2.55 2.06 1.02-.04 1.41-.66 2.65-.66 1.23 0 1.58.66 2.66.64 1.1-.02 1.79-1 2.46-2 .78-1.15 1.1-2.27 1.12-2.33-.02-.01-2.13-.82-2.16-3.25zM14.3 6.74c.56-.68.94-1.62.83-2.56-.81.03-1.79.54-2.37 1.21-.52.6-.97 1.56-.85 2.48.9.07 1.83-.46 2.39-1.13z"/></svg>
+      <div class="btn-store-text">
+        <small>Download on the</small>
+        <strong>App Store</strong>
+      </div>
     </a>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-links">
+  <div class="footer-nav">
     <a href="/">Home</a>
-    <a href="/privacy.html">Privacy Policy</a>
     <a href="/support.html">Support</a>
+    <a href="/privacy.html">Privacy Policy</a>
   </div>
   <p class="footer-disclaimer">
-    $MILES is not affiliated with, endorsed by, or connected to Tesla, Inc. or Robinhood Markets, Inc.
-    Tokenized TSLA is not a security, not a brokerage product, and is not guaranteed to maintain any particular value.
-    $MILES does not promote speeding or unsafe driving. Always obey posted speed limits and local traffic laws.
+    $MILES is not affiliated with, sponsored by, or endorsed by Tesla, Inc. or Robinhood Markets.
+    Tokenized TSLA represents fractional asset exposure on Robinhood Chain and is not a security,
+    brokerage product, or investment contract. $MILES strictly opposes speeding and dangerous driving.
   </p>
-  <p class="footer-copy">Copyright &copy; 2026 $MILES · Key Design Media. All Rights Reserved.</p>
+  <p class="footer-copy">© 2026 $MILES · Key Design Media. All rights reserved.</p>
 </footer>
 
 <script>
-  // Fade-in on scroll
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  document.querySelectorAll('.faq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const row = btn.closest('.faq-row');
+      const wasOpen = row.classList.contains('open');
+      document.querySelectorAll('.faq-row').forEach(r => r.classList.remove('open'));
+      if (!wasOpen) row.classList.add('open');
+    });
+  });
 </script>
 </body>
 </html>
