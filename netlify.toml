@@ -1,4 +1,24 @@
 [[redirects]]
-  from = "/"
+  from = "/dashboard"
+  to = "/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/app"
+  to = "/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/rewards"
+  to = "/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
   to = "/privacy.html"
-  status = 302
+  status = 200
+
+[[redirects]]
+  from = "/support"
+  to = "/support.html"
+  status = 200

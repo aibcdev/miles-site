@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>$MILES — Rewards Dashboard · Claim Tokenized TSLA</title>
+  <meta name="description" content="Connect your wallet, verify your $MILES token holdings, and convert your verified driving miles into tokenized TSLA on Robinhood Chain."/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"/>
+  <style>
+    :root {
+      --bg: #03060a;
+      --card: #0c1017;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover: rgba(0, 242, 254, 0.15);
+      --yellow: #FFE600;
+      --yellow-glow: rgba(255, 230, 0, 0.35);
+      --blue: #00F2FE;
+      --blue-alt: #38BDF8;
+      --blue-glow: rgba(0, 242, 254, 0.3);
+      --green: #10B981;
+      --red: #EF4444;
+      --text: #FFFFFF;
+      --muted: #94A3B8;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    /* Ambient Background Glows */
+    .bg-glow {
+      position: fixed; pointer-events: none; border-radius: 50%;
+      filter: blur(140px); z-index: 0;
+    }
+    .bg-glow-1 {
+      width: 550px; height: 550px;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.12) 0%, transparent 70%);
+      top: -100px; left: -50px;
+    }
+    .bg-glow-2 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255, 230, 0, 0.09) 0%, transparent 70%);
+      bottom: -150px; right: -50px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(8, 12, 18, 0.85);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 0 28px; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--text);
+      font-size: 20px; font-weight: 900; letter-spacing: -0.5px;
+    }
+    .brand-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--yellow);
+      box-shadow: 0 0 12px var(--yellow);
+    }
+    .header-ticker {
+      display: none; align-items: center; gap: 16px;
+      font-size: 13px; font-weight: 600;
+    }
+    @media (min-width: 840px) {
+      .header-ticker { display: flex; }
+    }
+    .ticker-pill {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--card-border);
+      padding: 6px 14px; border-radius: 999px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ticker-change { color: var(--green); font-size: 12px; }
+    .network-badge {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--blue);
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px solid rgba(0, 242, 254, 0.25);
+      padding: 6px 12px; border-radius: 999px;
+    }
+    .network-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--blue);
+      box-shadow: 0 0 8px var(--blue);
+    }
+
+    /* Wallet Connect Button */
+    .btn-wallet {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--yellow) 0%, #FFB800 100%);
+      color: #000; font-weight: 800; font-size: 14px;
+      padding: 10px 20px; border-radius: 999px;
+      border: none; cursor: pointer;
+      box-shadow: 0 4px 20px var(--yellow-glow);
+      transition: transform .15s, box-shadow .15s, opacity .15s;
+    }
+    .btn-wallet:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 230, 0, 0.45);
+    }
+    .btn-wallet.connected {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff; border: 1px solid var(--card-border);
+      box-shadow: none;
+    }
+    .btn-wallet.connected:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* ── MAIN LAYOUT ── */
+    main {
+      flex: 1; position: relative; z-index: 1;
+      max-width: 1140px; margin: 0 auto;
+      padding: 40px 24px 80px; width: 100%;
+    }
+
+    /* Page Heading */
+    .dashboard-head {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 32px; flex-wrap: wrap; gap: 16px;
+    }
+    .dashboard-title {
+      font-size: clamp(32px, 5vw, 44px);
+      font-weight: 900; letter-spacing: -1.5px;
+    }
+    .dashboard-title span {
+      background: linear-gradient(135deg, var(--yellow), var(--blue));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .dashboard-sub {
+      font-size: 15px; color: var(--muted); margin-top: 6px;
+    }
+
+    /* ── TOKEN GATE BANNER ── */
+    .gate-card {
+      background: linear-gradient(145deg, #101622 0%, #0d1219 100%);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      border-radius: 20px; padding: 26px 30px;
+      margin-bottom: 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 24px; flex-wrap: wrap;
+      box-shadow: 0 16px 40px -15px rgba(0, 242, 254, 0.15);
+    }
+    .gate-card.locked {
+      border-color: rgba(255, 230, 0, 0.35);
+      box-shadow: 0 16px 40px -15px rgba(255, 230, 0, 0.15);
+    }
+    .gate-info { display: flex; align-items: center; gap: 18px; }
+    .gate-icon {
+      width: 52px; height: 52px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; flex-shrink: 0;
+    }
+    .gate-card.locked .gate-icon {
+      background: rgba(255, 230, 0, 0.12);
+      border: 1px solid rgba(255, 230, 0, 0.3);
+    }
+    .gate-card.unlocked .gate-icon {
+      background: rgba(0, 242, 254, 0.12);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+    }
+    .gate-text h3 { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+    .gate-text p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+    .gate-actions { display: flex; gap: 12px; align-items: center; }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: #fff; font-weight: 700; font-size: 13px;
+      padding: 10px 18px; border-radius: 999px;
+      cursor: pointer; text-decoration: none;
+      transition: background .15s, border-color .15s;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--blue);
+    }
+    .btn-primary-blue {
+      background: linear-gradient(135deg, var(--blue) 0%, #00B4D8 100%);
+      color: #000; font-weight: 800; font-size: 13px;
+      padding: 10px 20px; border-radius: 999px;
+      border: none; cursor: pointer; text-decoration: none;
+      box-shadow: 0 4px 16px var(--blue-glow);
+    }
+
+    /* ── STATS TILES GRID ── */
+    .metrics-grid {
+      display: grid; gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      margin-bottom: 32px;
+    }
+    .metric-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 20px; padding: 24px;
+      position: relative; overflow: hidden;
+      transition: border-color .2s;
+    }
+    .metric-card:hover { border-color: rgba(255,255,255,0.2); }
+    .metric-kicker {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+    }
+    .metric-val {
+      font-size: 32px; font-weight: 900; letter-spacing: -1px;
+      display: flex; align-items: baseline; gap: 6px;
+    }
+    .metric-val.yellow { color: var(--yellow); }
+    .metric-val.blue { color: var(--blue); }
+    .metric-val small { font-size: 14px; font-weight: 600; color: var(--muted); }
+    .metric-footnote {
+      font-size: 12px; color: var(--muted); margin-top: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ── TSLA CLAIM HERO CARD ── */
+    .claim-hero {
+      background: radial-gradient(circle at top right, rgba(0, 242, 254, 0.08), transparent 50%),
+                  linear-gradient(145deg, #0e131d 0%, #080c12 100%);
+      border: 1px solid rgba(0, 242, 254, 0.25);
+      border-radius: 24px; padding: 36px;
+      margin-bottom: 32px;
+      display: grid; grid-template-columns: 1fr; gap: 28px;
+    }
+    @media (min-width: 840px) {
+      .claim-hero { grid-template-columns: 1.4fr 1fr; align-items: center; }
+    }
+    .claim-hero-left h2 {
+      font-size: 14px; font-weight: 800; color: var(--blue);
+      text-transform: uppercase; letter-spacing: .1em; margin-bottom: 10px;
+    }
+    .claim-big-num {
+      font-size: clamp(38px, 6vw, 56px);
+      font-weight: 900; letter-spacing: -2px; line-height: 1;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .claim-big-num span { color: var(--yellow); }
+    .claim-usd-est {
+      font-size: 16px; color: var(--muted); margin-bottom: 18px;
+    }
+    .claim-usd-est strong { color: #fff; }
+    .progress-bar-wrap {
+      background: rgba(255,255,255,0.06);
+      height: 8px; border-radius: 999px; overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .progress-bar-fill {
+      height: 100%; width: 75%;
+      background: linear-gradient(90deg, var(--yellow), var(--blue));
+      border-radius: 999px;
+    }
+    .progress-meta {
+      display: flex; justify-content: space-between;
+      font-size: 12px; color: var(--muted);
+    }
+    .claim-hero-right {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--card-border);
+      border-radius: 18px; padding: 24px;
+      text-align: center;
+    }
+    .btn-claim-main {
+      width: 100%;
+      background: linear-gradient(135deg, var(--yellow) 0%, #FFB800 100%);
+      color: #000; font-weight: 900; font-size: 16px;
+      padding: 16px 24px; border-radius: 14px;
+      border: none; cursor: pointer;
+      box-shadow: 0 8px 30px var(--yellow-glow);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .btn-claim-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba(255, 230, 0, 0.45);
+    }
+    .btn-claim-main:disabled {
+      opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none;
+    }
+    .claim-terms-note {
+      font-size: 11px; color: var(--muted); margin-top: 12px; line-height: 1.4;
+    }
+
+    /* ── CLAIM HISTORY TABLE ── */
+    .history-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 20px; padding: 28px;
+    }
+    .history-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px;
+    }
+    .history-title { font-size: 18px; font-weight: 800; }
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%; border-collapse: collapse; text-align: left;
+      font-size: 14px;
+    }
+    th {
+      padding: 12px 16px; color: var(--muted); font-size: 11px;
+      text-transform: uppercase; letter-spacing: .08em;
+      border-bottom: 1px solid var(--card-border);
+    }
+    td {
+      padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: #fff;
+    }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+    }
+    .status-badge.completed {
+      background: rgba(16, 185, 129, 0.12); color: var(--green);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+    .status-badge.pending {
+      background: rgba(255, 230, 0, 0.12); color: var(--yellow);
+      border: 1px solid rgba(255, 230, 0, 0.25);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 1000;
+      background: #101622; border: 1px solid var(--blue);
+      border-radius: 14px; padding: 16px 20px;
+      color: #fff; font-size: 14px; font-weight: 600;
+      box-shadow: 0 12px 32px rgba(0, 242, 254, 0.25);
+      display: none; animation: slideUp .3s ease-out;
+    }
+    @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 32px 24px; text-align: center;
+      font-size: 13px; color: var(--muted);
+      margin-top: auto;
+    }
+    footer a { color: var(--muted); text-decoration: none; margin: 0 8px; }
+    footer a:hover { color: var(--blue); }
+  </style>
+</head>
+<body>
+
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+
+<!-- HEADER -->
+<header>
+  <a href="/" class="brand">
+    <span class="brand-dot"></span>
+    $MILES <small style="font-size:11px;color:var(--muted);font-weight:700;margin-left:4px;letter-spacing:0.05em;">PORTAL</small>
+  </a>
+
+  <div class="header-ticker">
+    <div class="ticker-pill">
+      <span>TSLA</span>
+      <strong>$374.20</strong>
+      <span class="ticker-change">+2.45%</span>
+    </div>
+    <div class="network-badge">
+      <span class="network-dot"></span>
+      Robinhood Chain 4663
+    </div>
+  </div>
+
+  <button class="btn-wallet" id="connectWalletBtn" onclick="toggleWalletConnect()">
+    <span id="walletIcon">⚡</span>
+    <span id="walletBtnText">Connect Wallet</span>
+  </button>
+</header>
+
+<main>
+  <!-- DASHBOARD HEAD -->
+  <div class="dashboard-head">
+    <div>
+      <h1 class="dashboard-title">Driver <span>Rewards Portal</span></h1>
+      <p class="dashboard-sub">Verify your driving miles and claim fractional tokenized Tesla stock (TSLA).</p>
+    </div>
+    <div>
+      <a href="/" class="btn-secondary">← Back to App Info</a>
+    </div>
+  </div>
+
+  <!-- TOKEN GATE STATUS CARD -->
+  <div class="gate-card locked" id="gateCard">
+    <div class="gate-info">
+      <div class="gate-icon" id="gateIcon">🔒</div>
+      <div class="gate-text">
+        <h3 id="gateTitle">$MILES Token Gate: Verification Required</h3>
+        <p id="gateDesc">Tokenized TSLA claims are exclusive to verified drivers holding the <strong>$MILES</strong> token on Robinhood Chain.</p>
+      </div>
+    </div>
+    <div class="gate-actions">
+      <button class="btn-secondary" onclick="simulateTokenHolding()">Simulate $MILES Holder (Demo)</button>
+      <a href="https://robinhood.com" target="_blank" rel="noopener" class="btn-primary-blue">Get $MILES Token</a>
+    </div>
+  </div>
+
+  <!-- STATS TILES -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-kicker">Verified Road Distance</div>
+      <div class="metric-val yellow">148.5 <small>miles</small></div>
+      <div class="metric-footnote">🚗 Tracked natively via iOS App</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-kicker">Paid Qualifying Miles</div>
+      <div class="metric-val blue">112.0 <small>paid mi</small></div>
+      <div class="metric-footnote">⚡ Above 20 mph speed floor</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-kicker">Reward Conversion Rate</div>
+      <div class="metric-val">$0.01 <small>TSLA / mi</small></div>
+      <div class="metric-footnote">📈 Pegged to live TSLA stock price</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-kicker">Daily Cap Status</div>
+      <div class="metric-val">40.0 <small>/ 40 mi</small></div>
+      <div class="metric-footnote">🔄 Resets midnight local time</div>
+    </div>
+  </div>
+
+  <!-- CLAIM TSLA HERO CARD -->
+  <div class="claim-hero">
+    <div class="claim-hero-left">
+      <h2>Accumulated TSLA Stock Rewards</h2>
+      <div class="claim-big-num">
+        <span id="tslaAmountDisplay">0.00299</span> TSLA
+      </div>
+      <div class="claim-usd-est">
+        Equivalent to <strong id="usdValueDisplay">$1.12 USD</strong> in fractional Tesla exposure
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" style="width: 75%;"></div>
+      </div>
+      <div class="progress-meta">
+        <span>Daily Paid Cap: 75% utilized</span>
+        <span>112.0 / 148.5 Miles Verified</span>
+      </div>
+    </div>
+
+    <div class="claim-hero-right">
+      <button class="btn-claim-main" id="claimBtn" onclick="claimRewards()" disabled>
+        Connect Wallet to Claim
+      </button>
+      <p class="claim-terms-note">
+        Claims dispatch tokenized TSLA directly to your connected Robinhood Chain address. Zero gas fees covered by protocol.
+      </p>
+    </div>
+  </div>
+
+  <!-- CLAIM HISTORY TABLE -->
+  <div class="history-card">
+    <div class="history-head">
+      <h3 class="history-title">On-Chain Reward Distributions</h3>
+      <span style="font-size:12px;color:var(--muted);">Network: Robinhood Chain (ID 4663)</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Miles Batched</th>
+            <th>TSLA Distributed</th>
+            <th>Value (USD)</th>
+            <th>Transaction Hash</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="historyTableBody">
+          <tr>
+            <td>Sep 15, 2026</td>
+            <td>40.0 mi</td>
+            <td>0.00107 TSLA</td>
+            <td>$0.40</td>
+            <td><code style="color:var(--blue);font-size:12px;">0x8f2a...4b19</code></td>
+            <td><span class="status-badge completed">✓ Confirmed</span></td>
+          </tr>
+          <tr>
+            <td>Sep 14, 2026</td>
+            <td>40.0 mi</td>
+            <td>0.00107 TSLA</td>
+            <td>$0.40</td>
+            <td><code style="color:var(--blue);font-size:12px;">0x3e19...77a0</code></td>
+            <td><span class="status-badge completed">✓ Confirmed</span></td>
+          </tr>
+          <tr>
+            <td>Sep 13, 2026</td>
+            <td>32.0 mi</td>
+            <td>0.00085 TSLA</td>
+            <td>$0.32</td>
+            <td><code style="color:var(--blue);font-size:12px;">0xa701...99c2</code></td>
+            <td><span class="status-badge completed">✓ Confirmed</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toastMsg">Notification message</div>
+
+<footer>
+  <div>
+    <a href="/">Home</a>
+    <a href="/support.html">Support</a>
+    <a href="/privacy.html">Privacy Policy</a>
+  </div>
+  <p style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:14px;max-width:600px;margin-left:auto;margin-right:auto;">
+    $MILES is an autonomous driving reward portal. Not affiliated with, endorsed by, or sponsored by Tesla, Inc. or Robinhood Markets. Tokenized TSLA represents decentralized asset exposure and is not an SEC-registered security.
+  </p>
+</footer>
+
+<script>
+  let isConnected = false;
+  let holdsMiles = false;
+  let userWallet = "0x71C84B901D92A3b1C89F34DeE058A87192C849A1";
+
+  function showToast(msg) {
+    const t = document.getElementById("toastMsg");
+    t.textContent = msg;
+    t.style.display = "block";
+    setTimeout(() => { t.style.display = "none"; }, 4000);
+  }
+
+  async function toggleWalletConnect() {
+    if (!isConnected) {
+      // Check if window.ethereum exists
+      if (typeof window.ethereum !== 'undefined') {
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          if (accounts.length > 0) {
+            userWallet = accounts[0];
+          }
+        } catch (e) {
+          console.log("Using demo wallet");
+        }
+      }
+      isConnected = true;
+      document.getElementById("walletBtnText").textContent = userWallet.slice(0, 6) + "..." + userWallet.slice(-4);
+      document.getElementById("connectWalletBtn").classList.add("connected");
+      showToast("Wallet Connected: " + userWallet.slice(0, 6) + "..." + userWallet.slice(-4));
+      updateUI();
+    } else {
+      isConnected = false;
+      holdsMiles = false;
+      document.getElementById("walletBtnText").textContent = "Connect Wallet";
+      document.getElementById("connectWalletBtn").classList.remove("connected");
+      showToast("Wallet Disconnected");
+      updateUI();
+    }
+  }
+
+  function simulateTokenHolding() {
+    if (!isConnected) {
+      toggleWalletConnect();
+    }
+    holdsMiles = true;
+    showToast("✓ Verified! You hold 25,000 $MILES token on Robinhood Chain.");
+    updateUI();
+  }
+
+  function updateUI() {
+    const gateCard = document.getElementById("gateCard");
+    const gateIcon = document.getElementById("gateIcon");
+    const gateTitle = document.getElementById("gateTitle");
+    const gateDesc = document.getElementById("gateDesc");
+    const claimBtn = document.getElementById("claimBtn");
+
+    if (!isConnected) {
+      gateCard.className = "gate-card locked";
+      gateIcon.textContent = "🔒";
+      gateTitle.textContent = "$MILES Token Gate: Wallet Not Connected";
+      gateDesc.textContent = "Please connect your Robinhood Chain Web3 wallet to verify $MILES holdings.";
+      claimBtn.disabled = true;
+      claimBtn.textContent = "Connect Wallet to Claim";
+    } else if (!holdsMiles) {
+      gateCard.className = "gate-card locked";
+      gateIcon.textContent = "⚠️";
+      gateTitle.textContent = "$MILES Token Gate: 0 $MILES Detected";
+      gateDesc.textContent = "Your wallet does not hold any $MILES. Hold $MILES to unlock on-chain TSLA claims.";
+      claimBtn.disabled = true;
+      claimBtn.textContent = "Hold $MILES to Unlock Claim";
+    } else {
+      gateCard.className = "gate-card unlocked";
+      gateIcon.textContent = "✅";
+      gateTitle.textContent = "$MILES Holder Verified · TSLA Claims Unlocked";
+      gateDesc.textContent = "Tier: Certified Driver (25,000 $MILES). Verified miles are eligible for TSLA distributions.";
+      claimBtn.disabled = false;
+      claimBtn.textContent = "Claim 0.00299 TSLA to Wallet";
+    }
+  }
+
+  function claimRewards() {
+    if (!isConnected || !holdsMiles) return;
+    const claimBtn = document.getElementById("claimBtn");
+    claimBtn.disabled = true;
+    claimBtn.textContent = "Submitting to Robinhood Chain...";
+
+    setTimeout(() => {
+      showToast("🚀 Transaction Submitted! Tx: 0x9a3c...e810");
+      setTimeout(() => {
+        showToast("🎉 Successfully Claimed 0.00299 TSLA to your wallet!");
+        
+        // Prepend to history table
+        const tbody = document.getElementById("historyTableBody");
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>Today (Just now)</td>
+          <td>112.0 mi</td>
+          <td>0.00299 TSLA</td>
+          <td>$1.12</td>
+          <td><code style="color:var(--blue);font-size:12px;">0x9a3c...e810</code></td>
+          <td><span class="status-badge completed">✓ Confirmed</span></td>
+        `;
+        tbody.prepend(tr);
+
+        // Zero out claim display
+        document.getElementById("tslaAmountDisplay").textContent = "0.00000";
+        document.getElementById("usdValueDisplay").textContent = "$0.00 USD";
+        claimBtn.textContent = "All Rewards Claimed!";
+      }, 2000);
+    }, 1500);
+  }
+</script>
+</body>
+</html>
