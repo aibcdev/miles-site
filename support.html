@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>$MILES — Support</title>
+  <style>
+    :root {
+      --bg:#000; --card:#111114; --border:rgba(255,255,255,0.07);
+      --orange:#FF6A00; --text:#fff; --muted:rgba(255,255,255,0.52);
+      --font:-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:var(--text); font-family:var(--font); -webkit-font-smoothing:antialiased; }
+    nav {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 32px; height:60px;
+      border-bottom:1px solid var(--border);
+      background:rgba(0,0,0,0.9);
+    }
+    .nav-logo { font-size:20px; font-weight:900; text-decoration:none; color:var(--text); display:flex; align-items:center; gap:8px; }
+    .nav-logo .dot { width:8px; height:8px; border-radius:50%; background:var(--orange); }
+    main { max-width:760px; margin:0 auto; padding:64px 24px 100px; }
+    h1 { font-size:clamp(36px,6vw,56px); font-weight:900; letter-spacing:-1.5px; margin-bottom:8px; }
+    .sub { font-size:17px; color:var(--muted); margin-bottom:52px; line-height:1.6; }
+    h2 { font-size:22px; font-weight:800; margin:40px 0 16px; }
+    .faq { display:flex; flex-direction:column; gap:2px; }
+    .faq-item {
+      background:var(--card); border:1px solid var(--border); border-radius:14px;
+      overflow:hidden;
+    }
+    .faq-q {
+      width:100%; background:none; border:none; color:var(--text);
+      font-family:var(--font); font-size:16px; font-weight:700;
+      text-align:left; padding:20px 24px; cursor:pointer;
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+    }
+    .faq-q .chevron { font-size:12px; transition:transform .2s; flex-shrink:0; }
+    .faq-item.open .chevron { transform:rotate(180deg); }
+    .faq-a { font-size:15px; color:var(--muted); line-height:1.7; padding:0 24px 20px; display:none; }
+    .faq-item.open .faq-a { display:block; }
+    .contact-card {
+      margin-top:52px; background:var(--card); border:1px solid var(--border);
+      border-radius:20px; padding:36px;
+    }
+    .contact-card h2 { margin-top:0; }
+    .contact-card p { font-size:15px; color:var(--muted); margin-bottom:24px; line-height:1.6; }
+    .contact-card a {
+      display:inline-block; background:var(--orange);
+      color:#fff; font-weight:700; font-size:15px;
+      padding:14px 28px; border-radius:100px; text-decoration:none;
+    }
+    .contact-card a:hover { opacity:.88; }
+    footer { border-top:1px solid var(--border); padding:32px; text-align:center; font-size:13px; color:var(--muted); }
+    footer a { color:var(--muted); text-decoration:none; }
+    footer a:hover { color:var(--text); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">
+    <span class="dot"></span>
+    $MILES
+  </a>
+  <a href="/" style="font-size:14px;color:rgba(255,255,255,.5);text-decoration:none;">← Back</a>
+</nav>
+
+<main>
+  <h1>Support</h1>
+  <p class="sub">Answers to common questions about $MILES. Can't find what you need? Email us below — we respond within 24 hours.</p>
+
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq">
+
+    <div class="faq-item">
+      <button class="faq-q">Why isn't my drive being tracked? <span class="chevron">▼</span></button>
+      <div class="faq-a">
+        The most common reasons: (1) your speed didn't reach 20 mph on a mapped public road, (2) you denied Always Allow location permission — go to Settings → $MILES → Location → Always, (3) background app refresh is off — go to Settings → General → Background App Refresh → enable for $MILES.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Why did my trip get voided? <span class="chevron">▼</span></button>
+      <div class="faq-a">
+        Trips are voided if our motion sensor verification determines you were not in a car (e.g. cycling at speed), if your route was off-road or on an unmapped path, or if GPS signal was too weak to verify distance. Voids appear in your trip history with a reason.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">What is the daily cap? <span class="chevron">▼</span></button>
+      <div class="faq-a">
+        40 paid miles per day. Miles beyond that are still tracked and shown in your history, they just don't earn TSLA crumbs. The cap resets at midnight in your local time zone.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">How do I get my TSLA payout? <span class="chevron">▼</span></button>
+      <div class="faq-a">
+        Add your Robinhood Chain (chain ID 4663) wallet address in Settings inside the app. Your accumulated paid miles are queued for periodic TSLA crumb distribution. You do not need to do anything else — payouts happen automatically.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Is this real Tesla stock? <span class="chevron">▼</span></button>
+      <div class="faq-a">
+        It is tokenized TSLA on Robinhood Chain — a layer-2 blockchain designed for tokenized real-world assets. $MILES is not affiliated with Tesla, Inc. or Robinhood Markets. The token represents fractional TSLA exposure and is not a security or a brokerage product.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Why does the app need Always Allow location? <span class="chevron">▼</span></button>
+      <div class="faq-a">
+        Drives are detected automatically in the background — you should never need to open the app before driving. Without Always Allow, the app can't detect when you start a drive. Your location data is never sold and never shared with advertisers.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">How do I delete my data? <span class="chevron">▼</span></button>
+      <div class="faq-a">
+        All trip data is stored on your device. Deleting the app removes all local data immediately. For leaderboard data associated with your wallet address, email us and we will remove it within 30 days.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">The app crashes / won't open. What do I do? <span class="chevron">▼</span></button>
+      <div class="faq-a">
+        Try: (1) force-close and reopen, (2) restart your iPhone, (3) delete and reinstall the app (your trip history will be lost — back up first if you need it). If the issue persists, email us with your iPhone model and iOS version.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">How do I invite friends? <span class="chevron">▼</span></button>
+      <div class="faq-a">
+        Tap the Friends tab (second icon in the tab bar). Your unique invite code is shown at the top. Share it — when a friend enters your code, both of you get a bonus daily cap boost.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="contact-card">
+    <h2>Still need help?</h2>
+    <p>
+      Email us at <strong>support@miles.app</strong> with your device model, iOS version,
+      and a description of the issue. We aim to respond within 24 hours on business days.
+    </p>
+    <a href="mailto:support@miles.app">Email Support</a>
+  </div>
+</main>
+
+<footer>
+  <a href="/">Home</a> &nbsp;·&nbsp;
+  <a href="/privacy.html">Privacy Policy</a> &nbsp;·&nbsp;
+  &copy; 2026 $MILES · Key Design Media
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
