@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <title>$MILES — Rewards Dashboard · Claim Tokenized TSLA</title>
-  <meta name="description" content="Connect your wallet, verify your $MILES token holdings, and convert your verified driving miles into tokenized TSLA on Robinhood Chain."/>
+  <title>MILES — Rewards Dashboard · Claim Tokenized TSLA</title>
+  <meta name="description" content="Connect your wallet, verify your MILES token holdings, and convert your verified driving miles into tokenized TSLA on Robinhood Chain."/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"/>
   <style>
     :root {
@@ -354,7 +354,7 @@
 <header>
   <a href="/" class="brand">
     <span class="brand-dot"></span>
-    $MILES <small style="font-size:11px;color:var(--muted);font-weight:700;margin-left:4px;letter-spacing:0.05em;">PORTAL</small>
+    MILES <small style="font-size:11px;color:var(--muted);font-weight:700;margin-left:4px;letter-spacing:0.05em;">PORTAL</small>
   </a>
 
   <div class="header-ticker">
@@ -392,13 +392,13 @@
     <div class="gate-info">
       <div class="gate-icon" id="gateIcon">🔒</div>
       <div class="gate-text">
-        <h3 id="gateTitle">$MILES Token Gate: Verification Required</h3>
-        <p id="gateDesc">Tokenized TSLA claims are exclusive to verified drivers holding the <strong>$MILES</strong> token on Robinhood Chain.</p>
+        <h3 id="gateTitle">MILES Token Gate: Verification Required</h3>
+        <p id="gateDesc">Tokenized TSLA claims are exclusive to verified drivers holding the <strong>MILES</strong> token on Robinhood Chain.</p>
       </div>
     </div>
     <div class="gate-actions">
-      <button class="btn-secondary" onclick="simulateTokenHolding()">Simulate $MILES Holder (Demo)</button>
-      <a href="https://robinhood.com" target="_blank" rel="noopener" class="btn-primary-blue">Get $MILES Token</a>
+      <button class="btn-secondary" onclick="simulateTokenHolding()">Simulate MILES Holder (Demo)</button>
+      <a href="https://robinhood.com" target="_blank" rel="noopener" class="btn-primary-blue">Get MILES Token</a>
     </div>
   </div>
 
@@ -517,7 +517,7 @@
     <a href="/privacy.html">Privacy Policy</a>
   </div>
   <p style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:14px;max-width:600px;margin-left:auto;margin-right:auto;">
-    $MILES is an autonomous driving reward portal. Not affiliated with, endorsed by, or sponsored by Tesla, Inc. or Robinhood Markets. Tokenized TSLA represents decentralized asset exposure and is not an SEC-registered security.
+    MILES is an autonomous driving reward portal. Not affiliated with, endorsed by, or sponsored by Tesla, Inc. or Robinhood Markets. Tokenized TSLA represents decentralized asset exposure and is not an SEC-registered security.
   </p>
 </footer>
 
@@ -566,7 +566,7 @@
       toggleWalletConnect();
     }
     holdsMiles = true;
-    showToast("✓ Verified! You hold 25,000 $MILES token on Robinhood Chain.");
+    showToast("✓ Verified! You hold 25,000 MILES token on Robinhood Chain.");
     updateUI();
   }
 
@@ -580,22 +580,22 @@
     if (!isConnected) {
       gateCard.className = "gate-card locked";
       gateIcon.textContent = "🔒";
-      gateTitle.textContent = "$MILES Token Gate: Wallet Not Connected";
-      gateDesc.textContent = "Please connect your Robinhood Chain Web3 wallet to verify $MILES holdings.";
+      gateTitle.textContent = "MILES Token Gate: Wallet Not Connected";
+      gateDesc.textContent = "Please connect your Robinhood Chain Web3 wallet to verify MILES holdings.";
       claimBtn.disabled = true;
       claimBtn.textContent = "Connect Wallet to Claim";
     } else if (!holdsMiles) {
       gateCard.className = "gate-card locked";
       gateIcon.textContent = "⚠️";
-      gateTitle.textContent = "$MILES Token Gate: 0 $MILES Detected";
-      gateDesc.textContent = "Your wallet does not hold any $MILES. Hold $MILES to unlock on-chain TSLA claims.";
+      gateTitle.textContent = "MILES Token Gate: 0 MILES Detected";
+      gateDesc.textContent = "Your wallet does not hold any MILES. Hold MILES to unlock on-chain TSLA claims.";
       claimBtn.disabled = true;
-      claimBtn.textContent = "Hold $MILES to Unlock Claim";
+      claimBtn.textContent = "Hold MILES to Unlock Claim";
     } else {
       gateCard.className = "gate-card unlocked";
       gateIcon.textContent = "✅";
-      gateTitle.textContent = "$MILES Holder Verified · TSLA Claims Unlocked";
-      gateDesc.textContent = "Tier: Certified Driver (25,000 $MILES). Verified miles are eligible for TSLA distributions.";
+      gateTitle.textContent = "MILES Holder Verified · TSLA Claims Unlocked";
+      gateDesc.textContent = "Tier: Certified Driver (25,000 MILES). Verified miles are eligible for TSLA distributions.";
       claimBtn.disabled = false;
       claimBtn.textContent = "Claim 0.00299 TSLA to Wallet";
     }
